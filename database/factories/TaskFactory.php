@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\TaskItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,8 +25,4 @@ class TaskFactory extends Factory
         ];
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
