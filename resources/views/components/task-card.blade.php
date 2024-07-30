@@ -9,7 +9,7 @@
 
 
 <div class="shadow-lg rounded-xl w-full p-4 bg-white relative overflow-hidden">
-    <a href="#" class="w-full h-full block">
+    <a href="/tasks/{{ $task->id }}" class="w-full h-full block">
         <div class="flex items-center border-b-2 mb-2 py-2">
             <img class='w-10 h-10 object-cover rounded-full' alt='User avatar' src='{{ $avatar }}'>
 

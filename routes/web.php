@@ -16,19 +16,29 @@ Route::get('/', function() {
         if (auth()->check()) {
             $user = auth()->user();
             $tasks = Task::where('user_id', $user->id)->get();
-            return view('tasks', ['tasks' => $tasks]);
+            return view('tasks.index', ['tasks' => $tasks]);
         } else {
             return view('guests');
         }
     })
     ->name('home');
 
+// Individual task pages:
+Route::get('/tasks/create', function () {
+    return view('tasks.create');
+})->name('task-create');
+
+// Individual task edit:
+Route::get('/tasks/edit/{id}', function ( $id ) {
+    $task = Task::find($id);
+    return view('tasks.edit', ['task' => $task]);
+})->name('task-edit');
 
 // Individual task pages:
 Route::get('/tasks/{id}', function ( $id ) {
     $task = Task::find($id);
-    return view('task', ['task' => $task]);
-});
+    return view('tasks.show', ['task' => $task]);
+})->name('task-show');
 
 // Protected pages
 //Route::view('dashboard', 'dashboard')

@@ -6,6 +6,8 @@ use App\Models\TaskItem;
 
 new class extends Component {
     public $task = false;
+
+    public $avatar = 'https://live.staticflickr.com/7369/8725121452_dfb9881fd9_b.jpg';
 };
 ?>
 
