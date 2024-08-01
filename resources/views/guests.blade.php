@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot:header>
-        To Do Task Manager
+        To Do Task Manager Name Here
     </x-slot:header>
 
     Guest welcome here.

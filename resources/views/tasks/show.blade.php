@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot:title>
-        Tasks - TODO TASK NAME
+        Tasks - {{ $task['name'] }}
     </x-slot>
 
     <x-slot:header>
-        TODO TASK NAME
+        {{ $task['name'] }}
     </x-slot:header>
 
 

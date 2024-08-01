@@ -55,4 +55,24 @@ class Task extends Model
     }
 
 
+    public function countItems() {
+        return count($this->items);
+    }
+
+    public function countCompletedItems() {
+        $count = 0;
+        foreach ($this->items as $item) {
+            if ($item->isCompleted()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function percentComplete() {
+        return ($this->countCompletedItems() / $this->countItems()) * 100;
+    }
+
+
+
 }

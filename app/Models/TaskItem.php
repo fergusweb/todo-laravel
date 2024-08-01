@@ -44,5 +44,19 @@ class TaskItem extends Model
         return $this->belongsTo(Task::class);
     }
 
+    public function isCompleted() {
+        return $this->completed_at ? true : false;
+    }
+
+    /**
+     * Mark this item as Complete by setting the completed_at
+     *
+     * @param string $date
+     * @return void
+     */
+    public function complete($date) {
+      $this->completed_at = '';
+    }
+
 
 }
