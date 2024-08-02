@@ -54,11 +54,20 @@ class Task extends Model
         return $this->hasMany(TaskItem::class);
     }
 
-
+    /**
+     * Count how many items this Task holds
+     *
+     * @return int
+     */
     public function countItems() {
         return count($this->items);
     }
 
+    /**
+     * Count how many of the items are completed
+     *
+     * @return int
+     */
     public function countCompletedItems() {
         $count = 0;
         foreach ($this->items as $item) {
@@ -69,7 +78,15 @@ class Task extends Model
         return $count;
     }
 
+    /**
+     * Calculate the percentage of items that are complete
+     *
+     * @return double
+     */
     public function percentComplete() {
+        if (!$this->countCompletedItems() || !$this->countItems()) {
+            return 0;
+        }
         return ($this->countCompletedItems() / $this->countItems()) * 100;
     }
 

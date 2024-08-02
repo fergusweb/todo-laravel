@@ -62,9 +62,6 @@
         */
         ?>
 
-
-
-
         <div class="flex items-center justify-between my-2">
             <p class="text-gray-300 text-sm">
                 {{ $task->countCompletedItems() }}/{{ $task->countItems() }} task completed

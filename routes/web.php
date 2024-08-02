@@ -11,6 +11,7 @@ Route::view('/about', 'about')
 Route::view('/contact', 'contact')
     ->name('contact');
 
+
 // Homepage is a guest view if not logged in, otherwise it shows your tasks
 Route::get('/', function() {
         if (auth()->check()) {
@@ -23,27 +24,75 @@ Route::get('/', function() {
     })
     ->name('home');
 
-// Individual task pages:
+
+// Create
 Route::get('/tasks/create', function () {
     return view('tasks.create');
 })->name('task-create');
 
-// Individual task edit:
-Route::get('/tasks/edit/{id}', function ( $id ) {
-    $task = Task::find($id);
-    return view('tasks.edit', ['task' => $task]);
-})->name('task-edit');
 
-// Individual task pages:
+// Show
 Route::get('/tasks/{id}', function ( $id ) {
     $task = Task::find($id);
     return view('tasks.show', ['task' => $task]);
 })->name('task-show');
 
-// Protected pages
-//Route::view('dashboard', 'dashboard')
-//    ->middleware(['auth', 'verified'])
-//    ->name('dashboard');
+
+// Store/Create
+Route::post('/tasks', function() {
+    request()->validate([
+        'taskName' => ['required', 'min:3'],
+        'taskDescription' => [],
+    ]);
+
+    $task = Task::create([
+        'name' => request('taskName'),
+        'description' => request('taskDescription'),
+        'user_id' => 1, // TODO: Link to authenticated user id
+    ]);
+    // Do the task items as well - not sure how yet.
+
+    return redirect('/tasks/'.$task->id);
+});
+
+
+// Edit
+Route::get('/tasks/{id}/edit', function ( $id ) {
+    $task = Task::find($id);
+    return view('tasks.edit', ['task' => $task]);
+})->name('task-edit');
+
+
+
+// Update
+Route::patch('/tasks/{id}', function ( $id ) {
+    request()->validate([
+        'taskName' => ['required', 'min:3'],
+        'taskDescription' => [],
+    ]);
+
+    // TODO: Authorise
+
+    $task = Task::findOrFail($id);
+
+    $task->update([
+        'name' => request('taskName'),
+        'description' => request('taskDescription'),
+        //'user_id' => 1, // TODO: Link to authenticated user id
+    ]);
+
+    return redirect('/tasks/'.$task->id);
+})->name('task-update');
+
+// Destroy/Delete
+Route::delete('/tasks/{id}', function ( $id ) {
+    // TODO: Authorise
+    Task::findOrFail($id)->delete();
+    return redirect('/');
+})->name('task-delete');
+
+
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
