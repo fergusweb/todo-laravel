@@ -32,8 +32,7 @@ Route::get('/tasks/create', function () {
 
 
 // Show
-Route::get('/tasks/{id}', function ( $id ) {
-    $task = Task::find($id);
+Route::get('/tasks/{task}', function ( Task $task ) {
     return view('tasks.show', ['task' => $task]);
 })->name('task-show');
 
@@ -50,30 +49,26 @@ Route::post('/tasks', function() {
         'description' => request('taskDescription'),
         'user_id' => 1, // TODO: Link to authenticated user id
     ]);
-    // Do the task items as well - not sure how yet.
+    // TODO the task items as well - not sure how yet.
 
     return redirect('/tasks/'.$task->id);
 });
 
 
 // Edit
-Route::get('/tasks/{id}/edit', function ( $id ) {
-    $task = Task::find($id);
+Route::get('/tasks/{task}/edit', function ( Task $task ) {
     return view('tasks.edit', ['task' => $task]);
 })->name('task-edit');
 
 
 
 // Update
-Route::patch('/tasks/{id}', function ( $id ) {
+Route::patch('/tasks/{task}', function ( Task $task ) {
+    // TODO: Authorise
     request()->validate([
         'taskName' => ['required', 'min:3'],
         'taskDescription' => [],
     ]);
-
-    // TODO: Authorise
-
-    $task = Task::findOrFail($id);
 
     $task->update([
         'name' => request('taskName'),
@@ -85,9 +80,9 @@ Route::patch('/tasks/{id}', function ( $id ) {
 })->name('task-update');
 
 // Destroy/Delete
-Route::delete('/tasks/{id}', function ( $id ) {
+Route::delete('/tasks/{task}', function ( Task $task ) {
     // TODO: Authorise
-    Task::findOrFail($id)->delete();
+    $task->delete();
     return redirect('/');
 })->name('task-delete');
 
