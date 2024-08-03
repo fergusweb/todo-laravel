@@ -13,4 +13,11 @@ class ExampleTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    public function test_it_loads_the_about_page(): void
+    {
+        //$view = $this->view('about', ['heading' => 'About']);
+        //$view->assertSee('About');
+        $this->get('/about')->assertSee('About');
+    }
 }

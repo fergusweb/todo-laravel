@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +15,8 @@ class TaskController extends Controller
      *
      * @return View
      */
-    public function index() {
+    public function index()
+    {
         $user = auth()->user();
         $tasks = Task::where('user_id', $user->id)->latest()->get();
         //$tasks = Task::latest()->get();
@@ -30,7 +30,8 @@ class TaskController extends Controller
      *
      * @return View
      */
-    public function create() {
+    public function create()
+    {
         return view('tasks.create');
     }
 
@@ -40,9 +41,9 @@ class TaskController extends Controller
      * @param Task $task
      * @return View
      */
-    public function show(Task $task) {
+    public function show(Task $task)
+    {
         return view('tasks.show', ['task' => $task]);
-
     }
 
     /**
@@ -50,7 +51,8 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store() {
+    public function store()
+    {
         request()->validate([
             'taskName' => ['required', 'min:3'],
             'taskDescription' => [],
@@ -63,7 +65,7 @@ class TaskController extends Controller
         ]);
         // TODO the task items as well - not sure how yet.
 
-        return redirect('/tasks/'.$task->id);
+        return redirect('/tasks/' . $task->id);
     }
 
     /**
@@ -72,7 +74,8 @@ class TaskController extends Controller
      * @param Task $task
      * @return View
      */
-    public function edit( Task $task ) {
+    public function edit(Task $task)
+    {
         return view('tasks.edit', ['task' => $task]);
     }
 
@@ -82,8 +85,10 @@ class TaskController extends Controller
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( Task $task ) {
-        request()->validate([
+    public function update(Task $task)
+    {
+        //request()->validate([
+        app('request')->validate([
             'taskName' => ['required', 'min:3'],
             'taskDescription' => [],
         ]);
@@ -94,7 +99,7 @@ class TaskController extends Controller
             //'user_id' => 1, // TODO: Link to authenticated user id
         ]);
 
-        return redirect('/tasks/'.$task->id);
+        return redirect('/tasks/' . $task->id);
     }
 
     /**
@@ -103,9 +108,9 @@ class TaskController extends Controller
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Task $task ) {
+    public function destroy(Task $task)
+    {
         $task->delete();
         return redirect('/');
     }
-
 }
