@@ -1,8 +1,11 @@
 <?php
 
 use App\Models\Task;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
+// Register alias:
+//'TaskController' => App\Http\Controllers\TaskController::class;
 
 // General pages
 Route::view('/about', 'about')
@@ -11,10 +14,14 @@ Route::view('/about', 'about')
 Route::view('/contact', 'contact')
     ->name('contact');
 
-
+Route::view('/', 'guests')
+    ->name('home');
+/*
 // Homepage is a guest view if not logged in, otherwise it shows your tasks
+
 Route::get('/', function() {
         if (auth()->check()) {
+            //return TaskController::index();
             $user = auth()->user();
             $tasks = Task::where('user_id', $user->id)->get();
             return view('tasks.index', ['tasks' => $tasks]);
@@ -23,69 +30,38 @@ Route::get('/', function() {
         }
     })
     ->name('home');
+*/
 
+// Task routing
+Route::controller(TaskController::class)->group(function() {
+    Route::get('/tasks', 'index')
+        ->middleware('auth')
+        ->name('tasks.index');
 
-// Create
-Route::get('/tasks/create', function () {
-    return view('tasks.create');
-})->name('task-create');
+    Route::get('/tasks/create', 'create')
+        ->middleware('auth')
+        ->name('tasks.create');
 
+    Route::get('/tasks/{task}', 'show')
+        ->middleware('auth')
+        ->can('view', 'task');
 
-// Show
-Route::get('/tasks/{task}', function ( Task $task ) {
-    return view('tasks.show', ['task' => $task]);
-})->name('task-show');
+    Route::get('/tasks/{task}/edit', 'edit')
+        ->middleware('auth')
+        ->can('edit', 'task');
 
+    Route::post('/tasks', 'store')
+        ->middleware('auth');
 
-// Store/Create
-Route::post('/tasks', function() {
-    request()->validate([
-        'taskName' => ['required', 'min:3'],
-        'taskDescription' => [],
-    ]);
+    Route::patch('/tasks/{task}', 'update')
+        ->middleware('auth')
+        ->can('edit', 'task');
 
-    $task = Task::create([
-        'name' => request('taskName'),
-        'description' => request('taskDescription'),
-        'user_id' => 1, // TODO: Link to authenticated user id
-    ]);
-    // TODO the task items as well - not sure how yet.
-
-    return redirect('/tasks/'.$task->id);
+    Route::delete('/tasks/{task}', 'destroy')
+        ->middleware('auth')
+        ->can('edit', 'task');
 });
-
-
-// Edit
-Route::get('/tasks/{task}/edit', function ( Task $task ) {
-    return view('tasks.edit', ['task' => $task]);
-})->name('task-edit');
-
-
-
-// Update
-Route::patch('/tasks/{task}', function ( Task $task ) {
-    // TODO: Authorise
-    request()->validate([
-        'taskName' => ['required', 'min:3'],
-        'taskDescription' => [],
-    ]);
-
-    $task->update([
-        'name' => request('taskName'),
-        'description' => request('taskDescription'),
-        //'user_id' => 1, // TODO: Link to authenticated user id
-    ]);
-
-    return redirect('/tasks/'.$task->id);
-})->name('task-update');
-
-// Destroy/Delete
-Route::delete('/tasks/{task}', function ( Task $task ) {
-    // TODO: Authorise
-    $task->delete();
-    return redirect('/');
-})->name('task-delete');
-
+//Route::resource('tasks', TaskController::class);
 
 
 
