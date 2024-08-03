@@ -11,8 +11,6 @@
         @endcan
     </x-slot:header>
 
-
-
     <h2 class="font-bold text-xl">{{ $task->name }}</h2>
     <p>
         {{ $task->description }}
@@ -21,24 +19,13 @@
     <h3 class="mt-6 font-bold text-large mb-3">Tasks</h3>
     <div class="w-full space-y-2">
         @foreach ($task->items as $item)
-            <div class="relative flex gap-x-3">
-                <div class="flex h-6 items-center">
-                    <input
-                        id="comments"
-                        name="comments"
-                        type="checkbox"
-                        {{ $item->isCompleted() ? 'checked="checked"' : '' }}
-                        disabled
-                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                </div>
-                <div class="text-sm leading-6">
-                    <label for="comments" class="font-medium text-gray-900">{{ $item->name }}</label>
-                    <!--
-                        <p class="text-gray-400 text-sm">{{ $item->description }}</p>
-                    -->
-                </div>
-            </div>
+
+            @livewire('tasks.show-task-item', ['item' => $item])
+
+
+
         @endforeach
     </div>
 
 </x-app-layout>
+

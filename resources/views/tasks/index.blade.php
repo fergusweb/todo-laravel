@@ -7,7 +7,7 @@
         See Tasks
     </x-slot:header>
 
-    <h2 class="text-xl mb-3">Let's do our tasks here</h2>
+    <h2 class="text-xl mb-3">Let's show our tasks here</h2>
 
 
     <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">

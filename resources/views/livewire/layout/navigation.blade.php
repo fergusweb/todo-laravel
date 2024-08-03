@@ -18,8 +18,9 @@ new class extends Component {
         $this->links[] = (object) ['route' => 'home', 'label' => 'Home'];
         $this->links[] = (object) ['route' => 'about', 'label' => 'About'];
         $this->links[] = (object) ['route' => 'contact', 'label' => 'Contact'];
-        $this->links[] = (object) ['route' => 'tasks.index', 'label' => 'Tasks'];
-        $this->links[] = (object) ['route' => 'tasks.create', 'label' => 'Create Task'];
+        if (auth()->check()) {
+            $this->links[] = (object) ['route' => 'tasks.create', 'label' => 'Create Task'];
+        }
         //echo '<pre>', print_r($this->links, true), '</pre>';
     }
 

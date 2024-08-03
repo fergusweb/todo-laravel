@@ -4,9 +4,17 @@
     </x-slot>
 
     <x-slot:header>
-        To Do Task Manager Name Here
+        To Do App
     </x-slot:header>
 
-    Guest welcome here.
+    <p>
+        This is an experiment with Laravel 11.  I'm building a simple TODO app.
+    </p>
+    <p>
+        The app uses Breeze for authentication & user management. Users can add a task,
+        and add items to that task.  You can tick off items, and once all items are done the
+        task is complete.
+    </p>
+    <p>We're making heavy use of Tailwind CSS too.</p>
 
 </x-app-layout>

@@ -14,23 +14,26 @@ Route::view('/about', 'about')
 Route::view('/contact', 'contact')
     ->name('contact');
 
-Route::view('/', 'guests')
-    ->name('home');
-/*
-// Homepage is a guest view if not logged in, otherwise it shows your tasks
+//Route::view('/', 'guests')
+//    ->name('home');
 
+
+// Homepage is a guest view if not logged in, otherwise it shows your tasks
 Route::get('/', function() {
         if (auth()->check()) {
+            return app(TaskController::class)->index();
+            /*
             //return TaskController::index();
             $user = auth()->user();
             $tasks = Task::where('user_id', $user->id)->get();
             return view('tasks.index', ['tasks' => $tasks]);
+            */
         } else {
             return view('guests');
         }
     })
     ->name('home');
-*/
+
 
 // Task routing
 Route::controller(TaskController::class)->group(function() {
