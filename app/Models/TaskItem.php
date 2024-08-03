@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Carbon\Carbon;
 
 class TaskItem extends Model
 {
@@ -30,7 +30,7 @@ class TaskItem extends Model
      *
      * @var array
      */
-    protected $fillable = ['task_id', 'name', 'description'];
+    protected $fillable = ['task_id', 'name', 'description', 'completed_at'];
 
 
 
@@ -51,11 +51,15 @@ class TaskItem extends Model
     /**
      * Mark this item as Complete by setting the completed_at
      *
-     * @param string $date
+     * @param string|null $date
      * @return void
      */
-    public function complete($date) {
-      $this->completed_at = '';
+    public function complete($date=null) {
+        if (!$date) {
+            $date = Carbon::now()->toDateTimeString();
+        }
+        $this->completed_at = $date;
+        $this->save();
     }
 
 

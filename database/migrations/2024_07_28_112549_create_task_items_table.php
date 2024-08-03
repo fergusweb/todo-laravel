@@ -17,7 +17,7 @@ return new class extends Migration
             //$table->foreign('task_id')->references('id')->on('tasks');
             $table->foreignIdFor(\App\Models\Task::class);
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->timestamp('completed_at', precision: 0)->nullable();
         });

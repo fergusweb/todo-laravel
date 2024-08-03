@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Task extends Model
 {
@@ -45,6 +46,26 @@ class Task extends Model
 
 
     /**
+     * Get the IDs for the various Items of this Task
+     * @return array
+     */
+    public function getTaskItemIds()
+    {
+        return $this->taskItems()->pluck('id');
+    }
+
+    /**
+     * Get all of the items for this Task
+     * Duplicate of items() because this is the default standard I think
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function taskItems(): HasMany
+    {
+        return $this->hasMany(TaskItem::class);
+    }
+
+    /**
      * Get all of the items for this Task
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -59,7 +80,8 @@ class Task extends Model
      *
      * @return int
      */
-    public function countItems() {
+    public function countItems()
+    {
         return count($this->items);
     }
 
@@ -68,7 +90,8 @@ class Task extends Model
      *
      * @return int
      */
-    public function countCompletedItems() {
+    public function countCompletedItems()
+    {
         $count = 0;
         foreach ($this->items as $item) {
             if ($item->isCompleted()) {
@@ -83,13 +106,11 @@ class Task extends Model
      *
      * @return double
      */
-    public function percentComplete() {
+    public function percentComplete()
+    {
         if (!$this->countCompletedItems() || !$this->countItems()) {
             return 0;
         }
         return ($this->countCompletedItems() / $this->countItems()) * 100;
     }
-
-
-
 }

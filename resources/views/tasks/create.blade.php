@@ -39,7 +39,7 @@
             <div class="task-item grid gap-8" style="grid-template-columns:min-content auto;">
                 <div class="flex h-8 w-8 items-center">
                     <div class="pt-14 grid gap-y-4">
-                        <input type="checkbox" id="completed" name="items[0][completed]"
+                        <input type="checkbox" id="completed" name="items[0][completed]" value="1"
                             class="h-8 w-8 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
                         <button type="button"
                             class="remove-item bg-red-600 text-white py-2 px-2 rounded-md shadow-sm hover:bg-red-700">X</button>
