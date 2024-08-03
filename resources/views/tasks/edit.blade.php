@@ -10,25 +10,16 @@
     <form method="POST" action="/tasks/{{ $task->id }}">
         @csrf
         @method('PATCH')
-        <!--
-        @if ($errors->any())
-<div class="mx-10">
-                <ul>
-                    @foreach ($errors->all() as $error)
-<li class="text-red-500 italic">{{ $error }}</li>
-@endforeach
-                </ul>
-            </div>
-@endif
--->
 
         <div class="mb-4">
             <x-input-label for="taskName" value="Task Name" />
-            <x-text-input id="taskName" name="taskName" type="text" value="{{ $task->name }}" />
+            <x-text-input id="taskName" name="taskName" type="text" value="{{ $task->name }}" required />
+            <x-input-error :messages="$errors->get('taskName')" class="mt-2" />
         </div>
         <div class="mb-4">
             <x-input-label for="taskDescription" value="Task Description" />
             <x-textarea-input id="taskDescription" name="taskDescription">{{ $task->description }}</x-textarea-input>
+            <x-input-error :messages="$errors->get('taskDescription')" class="mt-2" />
         </div>
 
         <fieldset id="taskItems">
@@ -40,6 +31,7 @@
                 }
             @endphp
             @foreach ($task->items as $item)
+                <input type="hidden" name="items[{{ $loop->index }}][task_id]" value="{{ $item->id }}">
                 <div class="task-item grid gap-8" style="grid-template-columns:min-content auto;">
                     <div class="flex h-8 w-8 items-center">
                         <div class="pt-14 grid gap-y-4">
@@ -55,13 +47,15 @@
                             <x-input-label for="itemName{{ $loop->index }}" value="Item Name" />
                             <x-text-input id="taskName{{ $loop->index }}" name="items[{{ $loop->index }}][name]"
                                 type="text"
-                                required value="{{ $item->name }}" />
+                                value="{{ $item->name }}" />
+                            <x-input-error :messages="$errors->get('items[{{ $loop->index }}][name]')" class="mt-2" />
                         </div>
                         <div class="mb-4">
                             <x-input-label for="itemDescription{{ $loop->index }}" value="Item Description" />
                             <x-textarea-input id="itemDescription{{ $loop->index }}"
                                 name="items[{{ $loop->index }}][description]"
                                 rows="2">{{ $item->description }}</x-textarea-input>
+                            <x-input-error :messages="$errors->get('items[{{ $loop->index }}][description]')" class="mt-2" />
                         </div>
                     </div>
                 </div>

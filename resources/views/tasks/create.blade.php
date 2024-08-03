@@ -23,11 +23,13 @@
 
         <div class="mb-4">
             <x-input-label for="taskName" value="Task Name" />
-            <x-text-input id="taskName" name="taskName" type="text" />
+            <x-text-input id="taskName" name="taskName" type="text" required />
+            <x-input-error :messages="$errors->get('taskName')" class="mt-2" />
         </div>
         <div class="mb-4">
             <x-input-label for="taskDescription" value="Task Description" />
             <x-textarea-input id="taskDescription" name="taskDescription"></x-textarea-input>
+            <x-input-error :messages="$errors->get('taskDescription')" class="mt-2" />
         </div>
 
         <fieldset id="taskItems">
@@ -47,11 +49,13 @@
                     <div class="mb-4">
                         <x-input-label for="itemName0" value="Item Name" />
                         <x-text-input id="taskName0" name="items[0][name]" type="text" required />
+                        <x-input-error :messages="$errors->get('items[0][name]')" class="mt-2" />
                     </div>
                     <div class="mb-4">
                         <x-input-label for="itemDescription0" value="Item Description" />
                         <x-textarea-input id="itemDescription0" name="items[0][description]"
                             rows="2"></x-textarea-input>
+                        <x-input-error :messages="$errors->get('items[0][description]')" class="mt-2" />
                     </div>
                 </div>
             </div>

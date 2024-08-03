@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Gate;
 class TaskController extends Controller
 {
 
+    /**
+     * Show the index of tasks
+     *
+     * @return View
+     */
     public function index() {
         $user = auth()->user();
         $tasks = Task::where('user_id', $user->id)->latest()->get();
@@ -19,13 +24,32 @@ class TaskController extends Controller
             'tasks' => $tasks
         ]);
     }
+
+    /**
+     * Show the form to Create Task
+     *
+     * @return View
+     */
     public function create() {
         return view('tasks.create');
     }
+
+    /**
+     * Show a task
+     *
+     * @param Task $task
+     * @return View
+     */
     public function show(Task $task) {
         return view('tasks.show', ['task' => $task]);
 
     }
+
+    /**
+     * Create a task
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store() {
         request()->validate([
             'taskName' => ['required', 'min:3'],
@@ -41,9 +65,23 @@ class TaskController extends Controller
 
         return redirect('/tasks/'.$task->id);
     }
+
+    /**
+     * Show the form to edit a task
+     *
+     * @param Task $task
+     * @return View
+     */
     public function edit( Task $task ) {
         return view('tasks.edit', ['task' => $task]);
     }
+
+    /**
+     * Update the task
+     *
+     * @param Task $task
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update( Task $task ) {
         request()->validate([
             'taskName' => ['required', 'min:3'],
@@ -58,6 +96,13 @@ class TaskController extends Controller
 
         return redirect('/tasks/'.$task->id);
     }
+
+    /**
+     * Delete the task
+     *
+     * @param Task $task
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy( Task $task ) {
         $task->delete();
         return redirect('/');
