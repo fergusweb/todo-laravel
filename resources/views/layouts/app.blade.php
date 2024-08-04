@@ -40,4 +40,5 @@
 </body>
 
 @livewireScripts
+@livewireScriptConfig
 </html>
