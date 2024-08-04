@@ -22,7 +22,8 @@ class ContactController extends Controller
             'message' => 'required|string|max:5000',
         ], $messages);
 
-        Mail::to('anthony@ferguson.codes')->send(new ContactFormMail($validatedData));
+        //Mail::to('anthony@ferguson.codes')->send(new ContactFormMail($validatedData));
+        Mail::to('anthony@ferguson.codes')->queue(new ContactFormMail($validatedData));
 
         return redirect()->route('contact')->with('success', 'Thank you for your message. We will get back to you soon.');
     }
