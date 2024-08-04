@@ -2,17 +2,16 @@
 
 use App\Models\Task;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 // Register alias:
 //'TaskController' => App\Http\Controllers\TaskController::class;
 
 // General pages
-Route::view('/about', 'about')
-    ->name('about');
-
-Route::view('/contact', 'contact')
-    ->name('contact');
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 //Route::view('/', 'guests')
 //    ->name('home');
