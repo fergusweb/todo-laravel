@@ -7,11 +7,16 @@
         Contact
     </x-slot:header>
 
-    <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-4">Need to send a message?</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success bg-green-100 text-green-800 border-green-400 border-solid border-2 rounded-md p-4 mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <form method="POST" action="/contact">
         @csrf
-        <!--
+
         @if ($errors->any())
             <div class="mx-10">
                 <ul>
@@ -21,7 +26,7 @@
                 </ul>
             </div>
         @endif
-        -->
+
 
         <div class="mb-4">
             <x-input-label for="name" value="Your name" />
