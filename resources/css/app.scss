@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+p {
+    margin-bottom:1em;
+    &:last-child {
+        border-bottom:0;
+    }
+}

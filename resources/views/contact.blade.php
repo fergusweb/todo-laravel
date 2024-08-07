@@ -1,14 +1,13 @@
 <x-app-layout>
     <x-slot:title>
-        Contact Title
+        Contact Us
     </x-slot>
 
     <x-slot:header>
-        Contact Heading
+        Contact
     </x-slot:header>
 
-    <h2 class="text-2xl font-bold tracking-tight text-gray-900">This is the contact page</h2>
-    <p>TODO: Contact form</p>
+    <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-4">Need to send a message?</h2>
 
     <form method="POST" action="/contact">
         @csrf

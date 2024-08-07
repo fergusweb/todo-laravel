@@ -11,20 +11,20 @@
         @endcan
     </x-slot:header>
 
-    <h2 class="font-bold text-xl">{{ $task->name }}</h2>
-    <p>
-        {{ $task->description }}
-    </p>
+    <div class="shadow-lg rounded-xl w-full p-4 bg-white relative overflow-hidden>
+        <h2 class="font-bold text-xl">{{ $task->name }}</h2>
+        <p>
+            {{ $task->description }}
+        </p>
+    </div>
 
-    <h3 class="mt-6 font-bold text-large mb-3">Tasks</h3>
-    <div class="w-full space-y-2">
-        @foreach ($task->items as $item)
-
-            @livewire('tasks.show-task-item', ['item' => $item])
-
-
-
-        @endforeach
+    <div class="shadow-lg rounded-xl w-full p-4 bg-white relative overflow-hidden mt-8">
+        <h3 class="mt-6 font-bold text-large mb-3">Tasks</h3>
+        <div class="w-full space-y-2">
+            @foreach ($task->items as $item)
+                @livewire('tasks.show-task-item', ['item' => $item])
+            @endforeach
+        </div>
     </div>
 
 </x-app-layout>
